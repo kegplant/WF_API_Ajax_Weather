@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>weather</title>
+        <link rel="stylesheet" type="text/css" href="weather.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"> </script>
+        <script type="text/javascript">
+        function kelToCel(T){
+            var Tk=parseFloat(T);
+            var Tc=(Tk-273).toFixed(2);
+            return Tc;
+        }
+        $(document).ready(function(){
+            //loop over the 150 times
+            //api to find name json
+            $('h4').hide();
+            $('button').click(function(){
+                $.get(`http://api.openweathermap.org/data/2.5/weather?q=${$('input').val()}&&appid=7f88b8a2c4b2e0da7220ac532f775eb8`,function(res){
+                var temp=res['main']['temp'];
+                var city=res['name'];
+                $('h2').text(city);
+                $('h4').show();
+                t=kelToCel(temp);
+                $('h4').append(t+' Degree Celsius');
+                console.log(res);
+            },'json');
+            });
+            
+            //decode json to find stuff and display
+        });
+        </script>
+    </head>
+    <body>
+        <div>
+            <input type='text' placeholder='type city'> 
+            <button>Search Weather</button>
+            <h2></h2>
+            <h4>Temperature: </h4>
+        </div>
+    </body>
+</html>
